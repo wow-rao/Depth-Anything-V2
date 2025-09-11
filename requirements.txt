@@ -3,4 +3,3 @@ gradio==4.29.0
 matplotlib
 opencv-python
 torch
-torchvision
