@@ -192,8 +192,18 @@ class DepthAnythingV2(nn.Module):
         
         return depth.cpu().numpy()
     
-    def image2tensor(self, raw_image, input_size=518):        
-        transform = transforms = torch.nn.Sequential(
+    def image2tensor(self, raw_image, input_size=518):    
+        class CustomCompose:
+            def __init__(self, transforms):
+                # Store the list of transform objects
+                self.transforms = transforms
+
+            def __call__(self, image):
+                # Apply each transform in the list sequentially
+                for transform in self.transforms:
+                    image = transform(image)
+                return image
+         transform = CustomCompose([
             Resize(
                 width=input_size,
                 height=input_size,
@@ -204,7 +214,7 @@ class DepthAnythingV2(nn.Module):
                 image_interpolation_method=cv2.INTER_CUBIC,
             ),
             NormalizeImage(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-            PrepareForNet(),
+            PrepareForNet()]
         )
         
         h, w = raw_image.shape[:2]
