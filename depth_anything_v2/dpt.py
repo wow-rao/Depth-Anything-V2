@@ -203,16 +203,7 @@ class DepthAnythingV2(nn.Module):
                 for transform in self.transforms:
                     image = transform(image)
                 return image
-         transform = CustomCompose([
-            Resize(
-                width=input_size,
-                height=input_size,
-                resize_target=False,
-                keep_aspect_ratio=True,
-                ensure_multiple_of=14,
-                resize_method='lower_bound',
-                image_interpolation_method=cv2.INTER_CUBIC,
-            ),
+         transform = CustomCompose([Resize(width=input_size, height=input_size, resize_target=False, keep_aspect_ratio=True, ensure_multiple_of=14, resize_method='lower_bound',image_interpolation_method=cv2.INTER_CUBIC),
             NormalizeImage(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
             PrepareForNet()]
         )
