@@ -84,7 +84,8 @@ def click_event_factory(depth_map, name):
 
 
 def main():
-    DEVICE = 'cpu'   # CPU only
+    DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+    print("Running on:", DEVICE)
 
     # Load Depth Anything (SMALL model)
     model_configs = {
@@ -127,7 +128,7 @@ def main():
     cv2.imwrite("output/d_fused_colormap.png",
                 cv2.applyColorMap(d_fused_norm, cv2.COLORMAP_JET))
 
-    print("✅ Saved results in ./output folder")
+    print("Saved results in ./output folder")
 
     # 7. Show in separate windows
     cv2.namedWindow("RS Depth (colormap)")
@@ -155,3 +156,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
