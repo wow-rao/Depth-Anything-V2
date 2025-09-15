@@ -79,7 +79,7 @@ def convert_da_to_meters(d_da, d_rs_meters):
 
 
 def main():
-    DEVICE = 'cpu'   # CPU only
+    DEVICE = 'cuda'   # CPU only
 
     # Load Depth Anything (SMALL model)
     model_configs = {
@@ -133,8 +133,9 @@ def main():
     #cv2.imshow("Fused Depth (colormap)", cv2.applyColorMap(d_fused_norm, cv2.COLORMAP_JET))
 
     cv2.waitKey(0)
-    cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
     main()
+    cv2.destroyAllWindows()
+
